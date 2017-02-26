@@ -10,6 +10,7 @@ package pplassignment;
  *
  * @author nikita
  */
+//gifts attributes and their types
 public class gifts {
     public String gifttype;
     public int value;
@@ -21,7 +22,7 @@ public class gifts {
     
     public int utilValue;
     public String utilClass;
-    
+    //for essential type of gifts
     public gifts(String gtype,int val,int pri){
         gifttype = gtype;
         value =val;
@@ -31,6 +32,7 @@ public class gifts {
         luxRating = 0;
         difficultyObtain = 0;
     }
+    //for luxury type of gifts
     public gifts(String gtype,int val,int pri,int rating,int diff){
         gifttype = gtype;
         value =val;
@@ -40,6 +42,7 @@ public class gifts {
         utilValue = 0;
         utilClass = "";
     }
+    //for utility type of gifts 
     public gifts(String gtype,int val,int pri,int util,String utilclass){
         gifttype = gtype;
         value =val;

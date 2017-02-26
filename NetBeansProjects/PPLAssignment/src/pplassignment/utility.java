@@ -11,8 +11,9 @@ import java.util.*;
  *
  * @author nikita
  */
+//consists all functions used
 public class utility {
-    
+    /*allocate boyfriends to girlfriends as per their requirements*/
     void allocate( boys arr_boys[], int no_of_Boy, girls arr_girls[],int no_of_Girl) {
        
         Random rand = new Random();
@@ -62,14 +63,14 @@ public class utility {
             }
         }
     }
-    
+    /* check whether girl and boy are available to commit as per their status and requirements*/
     boolean available(girls girl,boys boy){
         if(girl.maint_cost < boy.budget && boy.min_attractive_req < girl.attractive && girl.status == false && boy.status == false){
             return true;
         }
         return false;
     }
-    
+    //generate gifts randomly
     void generate_gift(int noOfGifts, gifts arr_gift[]){
         Random rand = new Random();
         int type;
@@ -107,6 +108,8 @@ public class utility {
         }
         
     }
+    
+    //make couples
     int makeCouple(girls girl[],couples couple[],BufferedWriter fp){
         int i,k=0;
         for(i = 0; i< girl.length;i++){
@@ -126,7 +129,7 @@ public class utility {
         return k;
     }
     
-    
+    //create giftbasket for each couple if boys' budget allows
     void allocate_gift(couples couple[],gifts gift[],int noOfGirl,int noOfGift,BufferedWriter fp){
         sort(gift,noOfGift);
         gifts tempgift = new gifts("",0,0);
@@ -135,17 +138,32 @@ public class utility {
         for(i = 0; i < noOfGirl; i++){
             if(couple[i].boy == null)     
                 break;
+            
             for(j =0; j< noOfGift; j++){
-                
-                if(gift[j].price <= (couple[i].boy.budget - couple[i].girl.tot_gift_amount)  ){
+                int k=noOfGift;
+                if(couple[i].boy.b_type.equals("geeks") && j==0 && gift[j].price <= (couple[i].boy.budget - couple[i].girl.tot_gift_amount )){
+                    k = find(gift);
+                    if(k==-1) continue;
+                    couple[i].arr_gift.add(gift[k]);
+                    couple[i].girl.tot_gift_value = tempgift.value;
+                    couple[i].girl.tot_gift_amount = tempgift.price;
+                    couple[i].boy.tot_gift_amount = tempgift.price;
+                    try{
+                        fp.write(couple[i].boy.bname +" give "+gift[k].gifttype + " of price "+gift[k].price+ " to " +couple[i].girl.gname);
+                        fp.newLine();
+                    }
+                    catch(Exception e){
+                        
+                    }
+                }
+                if(gift[j].price <= (couple[i].boy.budget - couple[i].girl.tot_gift_amount) && j!=k ){
                     couple[i].arr_gift.add(gift[j]);
                     couple[i].girl.tot_gift_value += gift[j].value;
                     couple[i].girl.tot_gift_amount += gift[j].price;
                     
                     couple[i].boy.tot_gift_amount += gift[j].price;
-                    System.out.println(couple[i].boy.bname +" give "+gift[j].gifttype +" to " +couple[i].girl.gname);
                     try{
-                        fp.write(couple[i].boy.bname +" give "+gift[j].gifttype +" to " +couple[i].girl.gname);
+                        fp.write(couple[i].boy.bname +" give "+gift[j].gifttype + "of price "+gift[j].price+ " to " +couple[i].girl.gname);
                         fp.newLine();
                     }
                     catch(Exception e){
@@ -160,17 +178,12 @@ public class utility {
                 else break;
                 
             }
-            if(couple[i].boy.b_type.equals("geeks")){
-                tempgift = find(gift);
-                couple[i].arr_gift.add(tempgift);
-                couple[i].girl.tot_gift_value = tempgift.value;
-                couple[i].girl.tot_gift_amount = tempgift.price;
-                couple[i].boy.tot_gift_amount = tempgift.price;
-            }
+            //if boy is geek then gift one additional luxury gift to his girlfriend
+            
         }
     
     }
-    
+    //calculate happiness and compatibility of all couples
     void calculate_happiness_comp(couples couple[],int noOfCouple){
         int i;
         for(i =0; i< noOfCouple; i++){
@@ -178,6 +191,7 @@ public class utility {
             couple[i].compatibility();
         }
     }
+    //find k best happiest couples
     void bestKHappiestCouple(couples couple[],int noOfCouple,int k){
         int i,j;
         couples temp ;
@@ -194,6 +208,7 @@ public class utility {
             System.out.println("Couple: "+couple[i].boy.bname + " and " + couple[i].girl.gname);
         }
     }
+    //find k best compatible couples
     void bestKCompatibleCouple(couples couple[],int noOfCouple,int k){
         int i,j;
         couples temp ;
@@ -210,6 +225,7 @@ public class utility {
             System.out.println("Couple: "+couple[i].boy.bname + " and " + couple[i].girl.gname);
         }
     }
+    //sort all the as per theri increasing price
     void sort(gifts gift[],int no_gift){
         int i,j;
         System.out.println(gift.length);
@@ -225,15 +241,15 @@ public class utility {
         }
         
     }
-    
-    gifts find(gifts gift[]){
+    //find luxury gift
+    int find(gifts gift[]){
         int i;
         for(i = 0 ; i< gift.length;i++){
             if(gift[i].gifttype.equals("luxury")){
-                break;
+                return i;
             }
         }
-        return gift[i];
+        return -1;
     }
     
 }
