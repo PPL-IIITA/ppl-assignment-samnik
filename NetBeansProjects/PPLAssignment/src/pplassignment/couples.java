@@ -17,12 +17,14 @@ public class couples {
     public girls girl;
     int happiness;
     int compatability;
+    //list of all the gifts gifted by boyfriend to his girlfriend
     public ArrayList<gifts> arr_gift;
     public couples(boys boy,girls girl){
         this.boy = boy;
         this.girl = girl;
         this.arr_gift = new ArrayList<gifts>();
     }
+    //happiness of girlfriend as per her type
     int g_happiness(){
         
         int i,ess = 0 ,lux = 0,util = 0;
@@ -57,7 +59,7 @@ public class couples {
         }
         return girl.g_happiness;
     }
-    
+    //happiness of boyfriend as per his type
     int b_happiness(){
         
         if(boy.b_type.equals("miser")){
@@ -71,10 +73,12 @@ public class couples {
         }
         return boy.b_happiness;
     }
+    //happiness of couple depending on their happinesses
     void happiness(){
         
         happiness =  g_happiness() + b_happiness();
     }
+    //compatability  of couple 
     void compatibility(){
         double t1 = boy.budget - girl.maint_cost;
         int t2 = Math.abs(boy.attractive - girl.attractive );

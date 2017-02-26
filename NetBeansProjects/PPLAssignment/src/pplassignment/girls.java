@@ -9,6 +9,7 @@ package pplassignment;
  *
  * @author nikita
  */
+//girls attributes and her type
 public class girls {
     public String gname;
     public int attractive;

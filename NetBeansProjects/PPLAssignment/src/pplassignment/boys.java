@@ -9,6 +9,8 @@ package pplassignment;
  *
  * @author nikita
  */
+
+//boys attributes with their types also
 public class boys {
     public String bname;
     public int min_attractive_req;
