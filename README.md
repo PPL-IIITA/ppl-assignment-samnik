@@ -3,8 +3,10 @@ ppl-assignment-samnik created by GitHub Classroom
 
 Command for Terminal in Linux:
   $cd NetBeansProjects/PPLAssignment/build/classes
-  $java pplassignment.q1_main
-  $java pplassignment.q2_main
+  
+  for q1 :     $java pplassignment.q1_main
+  
+  for q2 :     $java pplassignment.q2_main
   
   
   
